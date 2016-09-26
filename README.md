@@ -4,6 +4,11 @@
 ## Binary Search Tree
 -
 
+- Group whiteboarding session between Derek, Mike, James, Steve and Nick was helpful in determining when BST rotations should take place.s
+
+### Cited Sources:
+[Binary Tree Implementation](http://interactivepython.org/runestone/static/pythonds/Trees/SearchTreeImplementation.html)
+
 # All work below this point was before the fork and by Derek Hewitt and Victor Benavente.
 
 ## Singly-Linked List  
