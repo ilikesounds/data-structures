@@ -31,7 +31,8 @@ class Node(object):
         """value setter for _left, allows us to say 'set node.left = X'
         elsewhere in our code and not have it throw wrenches at us"""
         self._left = other
-        other._parent = self
+        if other is not None:
+            other._parent = self
 
     @left.deleter
     def left(self):
@@ -52,7 +53,8 @@ class Node(object):
     def right(self, other):
         """sets value of _right and right's parent"""
         self._right = other
-        other._parent = self
+        if other is not None:
+            other._parent = self
 
     @right.deleter
     def right(self):
@@ -194,7 +196,10 @@ class BinarySearchTree(object):
             else:
                 self.root = Node(val, data)
             self.length += 1
-        self._check_balance_and_call(self.find_node(val))
+        self._update_balance(self.root)
+        new_node = self.find_node(val)
+        self._check_balance_and_call(new_node)
+        self._update_balance(self.root)
         self._update_balance(self.root)
 
     def contains(self, val):
