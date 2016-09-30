@@ -2,6 +2,7 @@
 """File tests our radix sort."""
 from __future__ import unicode_literals
 import pytest
+import random
 
 
 def test_radix_no_input():
@@ -50,4 +51,6 @@ def test_radix_correct_input_unordered():
 
 def test_radix_correct_input_long_random():
     from radix import radix_sort
-    pass
+    test_list = random.sample(range(10000), random.randrange(100, 10000))
+    output = test_list[:]
+    assert radix_sort(test_list) == sorted(output)

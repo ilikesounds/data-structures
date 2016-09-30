@@ -1,6 +1,13 @@
 # Data-Structures
 - sample code for a number of classic data structures implemented in Python  
 
+## Radix Sort
+- Radix sort is an integer sorting algorithym that uses positional sorting to group inputs into segments then returns a fully sorted list by least significant digit.
+- Worked with Steven and Victor writing this function.
+
+### Cited Sources:
+[Radix Tree Implementation](http://www.geekviewpoint.com/python/sorting/radixsort)
+
 ## Binary Search Tree
 -
 

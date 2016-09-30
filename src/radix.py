@@ -3,6 +3,8 @@
 from __future__ import unicode_literals
 from collections import OrderedDict
 from collections import deque
+import random
+import timeit
 
 
 def radix_sort(sort_list):
@@ -35,16 +37,33 @@ def radix_sort(sort_list):
     return [int(item) for item in sort_list]
 
 
-# bucket = ordered dict
-# lesser_buckets = dequs
-# {
-#     0:[],
-#     1:[],
-#     2:[],
-# }
-    # for item in the list:
-    #     dict[item % (num_sorts)].append(item)
-
-    # to get 1's digit, % 10
-    # to get 10's digit, % 100
-    # to get 100's digit, % 1000
+if __name__ == '__main__':
+    print("")
+    print("Radix Sort")
+    print("")
+    print("The following code demonstrates the performance of Radix Sort")
+    print("in a variety of use conditions executed 500 times.")
+    print("")
+    print("Input: 20 random ints under 100")
+    result = timeit.timeit(
+        'radix_sort(random.sample(range(100), 20))',
+        setup="""from __main__ import radix_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
+    print("")
+    print("Input: 100 random ints under 1000")
+    result = timeit.timeit(
+        'radix_sort(random.sample(range(1000), 100))',
+        setup="""from __main__ import radix_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
+    print("")
+    print("Input: 1000 random ints under 10000")
+    result = timeit.timeit(
+        'radix_sort(random.sample(range(10000), 1000))',
+        setup="""from __main__ import radix_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
