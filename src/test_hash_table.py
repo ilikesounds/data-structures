@@ -34,3 +34,10 @@ def test_hash_table_init_hash_method_error():
     """
     with pytest.raises(TypeError):
         HashTable(0)
+
+
+def test_hash_table_set_error():
+    """Test to ensure KeyError is raised from by a non-string input"""
+    ht = HashTable()
+    with pytest.raises(KeyError):
+        ht.set(1, 2)

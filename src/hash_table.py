@@ -39,7 +39,7 @@ class HashTable(object):
 
     def __init__(self, hash_func='simple_hash'):
         self.size = 1024
-        self._buckets = [[]] * self.size
+        self._buckets = [list() for _ in range(self.size)]
         self.hash_functions = {
             'simple_hash': simple_hash,
             'bp_hash': bp_hash
@@ -57,11 +57,21 @@ class HashTable(object):
         This function stores the given val using the given key
         """
         try:
-            hash_key = self.hash_func(key, self.size)
+            hash_key = self._hash(key, self.size)
         except AttributeError:
             raise KeyError('Value must be a string')
         if val not in self._buckets[hash_key]:
-            self._buckets.insert(hash_key, (key, val))
+            self._buckets[hash_key].append((key, val))
+
+    def get(self, key):
+        """
+        This function returns the value stored with the given key
+        """
+        hash_key = self._hash(key, self.size)
+        for idx, item in enumerate(self._buckets[hash_key]):
+            if item[idx] == key:
+                return item[1]
+        return KeyError('This key was not found in the hash table')
 
     def _hash(self, key, size):
         """
