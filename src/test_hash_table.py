@@ -1,13 +1,9 @@
-
 # -*- coding utf-8 -*-
 
 import pytest
 from hash_table import simple_hash, bp_hash, HashTable
 
 HASH_FUNCTIONS = [simple_hash, bp_hash]
-STRING_HASH = ['s', 'bp']
-
-# @pytest.mark.parametrize('s', HASH_FUNCTIONS)
 
 
 @pytest.mark.parametrize('hash_func', HASH_FUNCTIONS)
@@ -47,3 +43,20 @@ def test_hash_table_set_error():
     ht = HashTable(1024)
     with pytest.raises(KeyError):
         ht.set(1, 2)
+
+
+# @pytest.mark.parametrize('hash_func', HASH_FUNCTIONS)
+# def test_hash_word_list():
+#     """
+#     Full test of hash table with user dictionary
+#     """
+#     mil = 1000000
+#     ht = HashTable(mil)
+#     dictionary = '/usr/share/dict/words'
+#     f = open(dictionary, 'r')
+#
+#     for item in f:
+#         word = item.rstrip('\n')
+#         ht.set(word, word)
+#     f.close()
+#     assert ht.get(word) == word
