@@ -37,8 +37,8 @@ class HashTable(object):
     functions (__init__, _hash)to create a hash table.
     """
 
-    def __init__(self, hash_func='simple_hash'):
-        self.size = 1024
+    def __init__(self, size, hash_func='simple_hash'):
+        self.size = size
         self._buckets = [list() for _ in range(self.size)]
         self.hash_functions = {
             'simple_hash': simple_hash,
