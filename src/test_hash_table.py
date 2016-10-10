@@ -10,6 +10,12 @@ STRING_HASH = ['s', 'bp']
 # @pytest.mark.parametrize('s', HASH_FUNCTIONS)
 
 
+@pytest.mark.parametrize('hash_func', HASH_FUNCTIONS)
+def test_hash_func_returns_int(hash_func):
+    integer = hash_func('string', 1024)
+    assert isinstance(integer, int)
+
+
 def test_hash_table_init():
     """Test hash table initializes correctly."""
     ht = HashTable()

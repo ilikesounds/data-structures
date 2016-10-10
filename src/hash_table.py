@@ -51,3 +51,20 @@ class HashTable(object):
             raise TypeError(
                 'You must select simple_hash or bp_hash as a hash function'
                 )
+
+    def set(self, key, val):
+        """
+        This function stores the given val using the given key
+        """
+        try:
+            hash_key = self.hash_func(key, self.size)
+        except AttributeError:
+            raise KeyError('Value must be a string')
+        if val not in self._buckets[hash_key]:
+            self._buckets.insert(hash_key, (key, val))
+
+    def _hash(self, key, size):
+        """
+        This function returns the hashed value of the key provided
+        """
+        return self.hash_func(key, self.size)
