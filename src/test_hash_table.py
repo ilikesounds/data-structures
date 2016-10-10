@@ -18,13 +18,13 @@ def test_hash_func_returns_int(hash_func):
 
 def test_hash_table_init():
     """Test hash table initializes correctly."""
-    ht = HashTable()
+    ht = HashTable(1024)
     assert isinstance(ht, HashTable)
 
 
 def test_hash_table_init_buckets():
     """Test hash table creates correct number of buckets."""
-    ht = HashTable()
+    ht = HashTable(1024)
     assert len(ht._buckets) == 1024
 
 
@@ -33,11 +33,17 @@ def test_hash_table_init_hash_method_error():
     hash function.
     """
     with pytest.raises(TypeError):
-        HashTable(0)
+        HashTable({})
+
+
+def test_hash_table_hash_method():
+    """Test to ensure hash table intializes with simple_hash function"""
+    ht = HashTable(1024)
+    assert ht.hash_func == simple_hash
 
 
 def test_hash_table_set_error():
     """Test to ensure KeyError is raised from by a non-string input"""
-    ht = HashTable()
+    ht = HashTable(1024)
     with pytest.raises(KeyError):
         ht.set(1, 2)
