@@ -68,8 +68,8 @@ class HashTable(object):
         This function returns the value stored with the given key
         """
         hash_key = self._hash(key, self.size)
-        for idx, item in enumerate(self._buckets[hash_key]):
-            if item[idx] == key:
+        for item in self._buckets[hash_key]:
+            if item[0] == key:
                 return item[1]
         return KeyError('This key was not found in the hash table')
 
