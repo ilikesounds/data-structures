@@ -20,6 +20,14 @@ def test_radix_not_list_input():
     assert "Radix sort only accepts inputs inside a Python list." in str(message)
 
 
+def test_radix_list_empty():
+    """Test radix sort throws error with an empty list."""
+    from radix import radix_sort
+    with pytest.raises(IndexError) as message:
+        radix_sort([])
+    assert "Your list must not be empty." in str(message)
+
+
 def test_radix_list_not_ints():
     """Test radix sort with a list that isn't full of ints."""
     from radix import radix_sort

@@ -15,6 +15,8 @@ def radix_sort(sort_list):
     Worked with Steven and Victor writing this function."""
     if not isinstance(sort_list, list):
         raise TypeError("Radix sort only accepts inputs inside a Python list.")
+    if len(sort_list) < 1:
+        raise IndexError("Your list must not be empty.")
     for item in sort_list:
         if not isinstance(item, int):
             raise TypeError("All the items in your list must be integers.")
