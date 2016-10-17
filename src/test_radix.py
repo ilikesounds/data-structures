@@ -23,9 +23,7 @@ def test_radix_not_list_input():
 def test_radix_list_empty():
     """Test radix sort throws error with an empty list."""
     from radix import radix_sort
-    with pytest.raises(IndexError) as message:
-        radix_sort([])
-    assert "Your list must not be empty." in str(message)
+    assert radix_sort([]) == []
 
 
 def test_radix_list_not_ints():
@@ -38,6 +36,7 @@ def test_radix_list_not_ints():
 
 
 def test_radix_correct_short_input():
+    """Test radix sort with a short series of inputs."""
     from radix import radix_sort
     test_list = [5, 4, 47, 3, 22]
     output = test_list[:]
@@ -45,12 +44,14 @@ def test_radix_correct_short_input():
 
 
 def test_radix_correct_input_already_ordered():
+    """Test radix sort with an already sorted series of inputs."""
     from radix import radix_sort
     test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     assert radix_sort(test_list) == test_list
 
 
 def test_radix_correct_input_unordered():
+    """Test radix sort with unordered inputs."""
     from radix import radix_sort
     test_list = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     output = test_list[:]
@@ -58,6 +59,7 @@ def test_radix_correct_input_unordered():
 
 
 def test_radix_correct_input_long_random():
+    """Test radix sort with a long, random set of inputs."""
     from radix import radix_sort
     test_list = random.sample(range(10000), random.randrange(100, 10000))
     output = test_list[:]
