@@ -8,14 +8,6 @@ import random
 import string
 
 
-EDGE_CASES = [
-    {},
-    [],
-    {'a': 0},
-    [1, 2, 3],
-    ''
-]
-
 INT_CASES = [random.sample(range(1000),
              random.randrange(2, 100)) for n in range(10)
              ]
@@ -35,7 +27,7 @@ MyBSTFix = namedtuple(
 
 @pytest.fixture(scope='function', params=TEST_CASES)
 def full_bst(request):
-    '''return an empty Simple Graph'''
+    '''Return a full bst for testing'''
     from bst import BinarySearchTree
     bin_tree = BinarySearchTree()
     length = len(request.param)
@@ -53,19 +45,21 @@ def full_bst(request):
 
 @pytest.fixture(scope='function', params=[1, 5, 9, 15, 25, 'a', 'd', 'q'])
 def empty_bst(request):
-    '''return an empty Simple Graph'''
+    '''Return an empty bst'''
     from bst import BinarySearchTree
     bin_tree = BinarySearchTree()
     return MyBSTFix(bin_tree, request.param, None, None, None)
 
 
 def test_bst_init_node(empty_bst):
+    """test that Node inits w/ val"""
     from bst import Node
     a = Node(empty_bst.input_val)
     assert empty_bst.input_val == a.val
 
 
 def test_bst_init_node_has_left(empty_bst):
+    """test Node picks up arguments and has_left_child == that input"""
     from bst import Node
     a = Node(empty_bst.input_val,
              empty_bst.input_val,
@@ -76,6 +70,7 @@ def test_bst_init_node_has_left(empty_bst):
 
 
 def test_bst_init_node_has_right(empty_bst):
+    """test Node picks up arguments and has_right_child == that input"""
     from bst import Node
     a = Node(empty_bst.input_val,
              empty_bst.input_val,
@@ -86,39 +81,48 @@ def test_bst_init_node_has_right(empty_bst):
 
 
 def _test_bst_init_empty_tree(empty_bst):
+    """test that empty tree has no root"""
     assert empty_bst.bin_tree.root is None
 
 
 def test_bst_init_bin_tree():
+    """test that tree initialized w/ val gets that val at the root"""
     from bst import BinarySearchTree
     a = BinarySearchTree(1)
     assert a.root.val == 1
 
 
 def test_bst_insert(empty_bst):
+    """test that insert function works on empty bst"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     assert empty_bst.bin_tree.root.val == empty_bst.input_val
 
 
 def test_bst_insert_with_existing_node_right(empty_bst):
+    """test that insert works with existing node, larger value goes to the
+    right"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     empty_bst.bin_tree.insert(empty_bst.input_val * 2)
     assert empty_bst.bin_tree.root.right
 
 
 def test_bst_insert_with_existing_node(empty_bst):
+    """that that insert works with existing node, smaller value goes to the
+    left"""
     empty_bst.bin_tree.insert(empty_bst.input_val * 2)
     empty_bst.bin_tree.insert(empty_bst.input_val)
     assert empty_bst.bin_tree.root.left
 
 
 def test_find_node_with_one_node_in_tree(empty_bst):
+    """test find node with only one node in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     result = empty_bst.bin_tree.find_node(empty_bst.input_val)
     assert result.val == empty_bst.input_val
 
 
 def test_find_node_with_two_node_in_tree(empty_bst):
+    """test find node with two nodes in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     empty_bst.bin_tree.insert(empty_bst.input_val * 2)
     result = empty_bst.bin_tree.find_node(empty_bst.input_val * 2)
@@ -126,6 +130,7 @@ def test_find_node_with_two_node_in_tree(empty_bst):
 
 
 def test_find_node_with_three_node_in_tree(empty_bst):
+    """test find node with three nodes in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val * 10)
     empty_bst.bin_tree.insert(empty_bst.input_val)
     empty_bst.bin_tree.insert(empty_bst.input_val * 5)
@@ -134,6 +139,7 @@ def test_find_node_with_three_node_in_tree(empty_bst):
 
 
 def test_left_setter_child():
+    """test that left child setter works"""
     from bst import Node
     node1 = Node(9)
     node2 = Node(7)
@@ -142,6 +148,7 @@ def test_left_setter_child():
 
 
 def test_left_setter_parent():
+    """test that left child setter sets parent"""
     from bst import Node
     node1 = Node(9)
     node2 = Node(7)
@@ -150,6 +157,7 @@ def test_left_setter_parent():
 
 
 def test_right_setter_child():
+    """test rigth child setter works"""
     from bst import Node
     node1 = Node(7)
     node2 = Node(9)
@@ -158,6 +166,7 @@ def test_right_setter_child():
 
 
 def test_right_setter_parent():
+    """test that right child setter sets parent"""
     from bst import Node
     node1 = Node(7)
     node2 = Node(9)
@@ -166,6 +175,7 @@ def test_right_setter_parent():
 
 
 def test_del_left_child():
+    """test deleter on left child"""
     from bst import Node
     node1 = Node(9)
     node2 = Node(7)
@@ -175,6 +185,7 @@ def test_del_left_child():
 
 
 def test_del_left_child_error():
+    """test deleter on left child is None when it should be"""
     from bst import Node
     node1 = Node(9)
     del node1.left
@@ -182,6 +193,7 @@ def test_del_left_child_error():
 
 
 def test_del_right_child():
+    """test deleter on right child"""
     from bst import Node
     node1 = Node(7)
     node2 = Node(9)
@@ -191,6 +203,7 @@ def test_del_right_child():
 
 
 def test_del_right_child_error():
+    """test deleted on right child is None when it should be"""
     from bst import Node
     node1 = Node(9)
     del node1.right
@@ -198,6 +211,7 @@ def test_del_right_child_error():
 
 
 def test_parent_setter_child_parent():
+    """test parent setter works properly"""
     from bst import Node
     node1 = Node(1)
     node2 = Node(2)
@@ -206,6 +220,7 @@ def test_parent_setter_child_parent():
 
 
 def test_parent_setter_parent_child_right():
+    """test that parent setter sets child right properly"""
     from bst import Node
     node1 = Node(1)
     node2 = Node(2)
@@ -214,6 +229,7 @@ def test_parent_setter_parent_child_right():
 
 
 def test_parent_setter_parent_child_left():
+    """test that parent setter sets child left properly"""
     from bst import Node
     node1 = Node(2)
     node2 = Node(1)
@@ -222,16 +238,19 @@ def test_parent_setter_parent_child_left():
 
 
 def test_in_order_traversal(full_bst):
+    """test in order traversal output"""
     results = full_bst.bin_tree.in_order()
     assert list(results) == full_bst.sorted_list
 
 
 def test_in_order_traversal_empty_tree(empty_bst):
+    """test in order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.in_order()
 
 
 def test_pre_order_traversal(empty_bst):
+    """test pre order traversal output"""
     results = [10, 5, 3, 7, 15, 13, 17]
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -245,11 +264,13 @@ def test_pre_order_traversal(empty_bst):
 
 
 def test_pre_order_traversal_empty_tree(empty_bst):
+    """test pre order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.pre_order()
 
 
 def test_post_order_traversal(empty_bst):
+    """test post order traversal output"""
     results = [3, 7, 5, 13, 17, 15, 10]
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -263,23 +284,27 @@ def test_post_order_traversal(empty_bst):
 
 
 def test_post_order_traversal_empty_tree(empty_bst):
+    """test post order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.post_order()
 
 
 def test_contains_true(full_bst):
+    """test that tree contains returns true when it should"""
     tree = full_bst.bin_tree
     result = tree.contains(full_bst.sorted_list[1])
     assert result
 
 
 def test_contains_false(empty_bst):
+    """test contains is false when it should be"""
     tree = empty_bst.bin_tree
     result = tree.contains(1000)
     assert not result
 
 
 def test_depth(empty_bst):
+    """test the depth function returns correct value"""
     tree = empty_bst.bin_tree
     tree.insert(10)
     tree.insert(5)
@@ -293,11 +318,13 @@ def test_depth(empty_bst):
 
 
 def test_empty_tree_depth(empty_bst):
+    """test empty tree depth"""
     result = empty_bst.bin_tree.depth()
     assert result == 0
 
 
 def test_balance_balanced(empty_bst):
+    """test balance on balanced tree"""
     tree = empty_bst.bin_tree
     tree.insert(10)
     tree.insert(5)
@@ -311,6 +338,7 @@ def test_balance_balanced(empty_bst):
 
 
 def test_balance_negative(empty_bst):
+    """test balance negative"""
     tree = empty_bst.bin_tree
     tree.insert(10)
     tree.insert(5)
@@ -322,6 +350,7 @@ def test_balance_negative(empty_bst):
 
 
 def test_balance_positive(empty_bst):
+    """test balance positive"""
     tree = empty_bst.bin_tree
     tree.insert(10)
     tree.insert(5)
@@ -332,6 +361,7 @@ def test_balance_positive(empty_bst):
 
 
 def test_breadth_first(empty_bst):
+    """test breadth-first traversal output"""
     tree = empty_bst.bin_tree
     tree.insert(10)
     tree.insert(5)
@@ -345,6 +375,7 @@ def test_breadth_first(empty_bst):
 
 
 def test_breadth_first_empty_tree(empty_bst):
+    """test breadth-first on an empty tree"""
     tree = empty_bst.bin_tree
     with pytest.raises(IndexError):
         next(tree.breadth_first())

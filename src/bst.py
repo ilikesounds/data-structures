@@ -36,8 +36,8 @@ class Node(object):
 
     @left.deleter
     def left(self):
-        """allows us to say 'del node.left' else where in our code and get this
-        outcome"""
+        """allows us to say 'del node.left' elsewhere in our code and
+        thereby set it to none"""
         try:
             self._left._parent = None
         except AttributeError:
@@ -58,6 +58,8 @@ class Node(object):
 
     @right.deleter
     def right(self):
+        """allows us to say 'del node.right' elsewhere in our code and
+        thereby set it to none"""
         try:
             self._right._parent = None
         except AttributeError:
@@ -66,10 +68,13 @@ class Node(object):
 
     @property
     def parent(self):
+        """returns the parent node of self"""
         return self._parent
 
     @parent.setter
     def parent(self, other):
+        """sets the parent node and the parent's left or right,
+        as appropriate"""
         self._parent = other
         try:
             if other.val > self.val:
@@ -238,7 +243,6 @@ class BinarySearchTree(object):
         depending on the branch layout."""
         if starting_point is None:
             starting_point = self.root
-        # import pdb; pdb.set_trace();
         try:
             ld = starting_point.left.depth
         except AttributeError:
@@ -378,7 +382,6 @@ class BinarySearchTree(object):
         # import pdb; pdb.set_trace()
         a = pivot_parent
         b = pivot_parent.right
-        print("left rotation", a.val)
         if pivot_parent.parent is None:
             z = None
             self.root = b
@@ -396,7 +399,6 @@ class BinarySearchTree(object):
         """Performs a right rotation on a given section of our BST."""
         a = pivot_parent
         b = pivot_parent.left
-        print("right rotation", a.val)
         if pivot_parent.parent is None:
             z = None
             self.root = b
@@ -422,11 +424,9 @@ class BinarySearchTree(object):
             elif bal < 0:
                 previous = starting_point.right
         if bal > 1:
-            print("balance at {} is {}".format(starting_point.val, bal))
             self._determine_rotations_and_call(starting_point, previous)
             return
         if bal < -1:
-            print("balance at {} is {}".format(starting_point.val, bal))
             self._determine_rotations_and_call(starting_point, previous)
             return
         if starting_point.parent is None:
