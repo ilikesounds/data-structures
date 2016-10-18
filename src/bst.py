@@ -331,35 +331,34 @@ class BinarySearchTree(object):
     def delete(self, val):
         """Removes a node with val from the Tree, returns None."""
         delete_me = self.find_node(val)
-        if bool(delete_me) is False:
+        if not delete_me:
             return
         try:
-            left_childs = self.in_order(delete_me.left)
+            left_childs = list(self.in_order(delete_me.left))
         except AttributeError:
             left_childs = []
         try:
-            right_childs = self.in_order(delete_me.right)
+            right_childs = list(self.in_order(delete_me.right))
         except AttributeError:
             right_childs = []
-        left_list = []
-        for child in left_childs:
-            left_list.append(child)
         try:
-            left_choice = left_list[-1]
+            left_choice = left_childs[-1]
         except IndexError:
             left_choice = None
         try:
-            right_choice = next(right_childs)
+            right_choice = right_childs[0]
         except AttributeError:
             right_choice = None
-        a = right_choice - val
-        b = val - left_choice
+        a = abs(right_choice - val)
+        b = abs(val - left_choice)
         if a > b:
             left_choice = self.find_node(left_choice)
             if self.root == delete_me:
                 self.root = left_choice
             if left_choice.left is not None:
                 left_choice.left.parent = left_choice.parent
+            else:
+                left_choice.parent = None
             delete_me.val = left_choice.val
         else:
             right_choice = self.find_node(right_choice)
@@ -367,6 +366,8 @@ class BinarySearchTree(object):
                 self.root = right_choice
             if right_choice.right is not None:
                 right_choice.right.parent = right_choice.parent
+            else:
+                right_choice.parent = None
             delete_me.val = right_choice.val
         self._check_balance_and_call(delete_me)
         self._update_balance(self.root)
@@ -380,7 +381,7 @@ class BinarySearchTree(object):
     def _find_node(self, val, current_node):
         """Helper method to find_node, recursively called and returns the node
         or False if it isn't in the BST."""
-        if self.size() > 0:
+        if self.length > 0:
             try:
                 if val == current_node.val:
                     return current_node

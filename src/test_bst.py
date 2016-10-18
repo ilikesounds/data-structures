@@ -461,11 +461,11 @@ def test_bst_big_tree_deletion():
     tree = BinarySearchTree()
     rndm = [random.sample(range(1000),
             random.randrange(2, 100)) for n in range(10)]
-    tree.insert(27)
-    tree.insert(453)
     for lst in rndm:
         for val in lst:
             tree.insert(val)
+    tree.insert(27)
+    tree.insert(453)
     tree.delete(27)
     tree.delete(453)
     assert _bst_tree_checker(tree.root)
