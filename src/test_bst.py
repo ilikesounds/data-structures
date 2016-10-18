@@ -360,6 +360,12 @@ def test_balance_positive(empty_bst):
     assert result == 1
 
 
+def test_balance_empty():
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    assert tree.balance() == 0
+
+
 def test_breadth_first(empty_bst):
     """test breadth-first traversal output"""
     tree = empty_bst.bin_tree

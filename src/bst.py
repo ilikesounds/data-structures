@@ -261,7 +261,10 @@ class BinarySearchTree(object):
         """Will return an integer that's positive or negative that represents
         the difference between depth on both sides from the starting point."""
         if starting_point is None:
-            starting_point = self.root
+            if self.root is not None:
+                starting_point = self.root
+            else:
+                return 0
         left_depth = starting_point.left.depth if starting_point.left else 0
         right_depth = starting_point.right.depth if starting_point.right else 0
         return left_depth - right_depth
