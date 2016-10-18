@@ -114,14 +114,14 @@ def test_bst_insert_with_existing_node(empty_bst):
     assert empty_bst.bin_tree.root.left
 
 
-def test_find_node_with_one_node_in_tree(empty_bst):
+def test_bst_find_node_with_one_node_in_tree(empty_bst):
     """test find node with only one node in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     result = empty_bst.bin_tree.find_node(empty_bst.input_val)
     assert result.val == empty_bst.input_val
 
 
-def test_find_node_with_two_node_in_tree(empty_bst):
+def test_bst_find_node_with_two_node_in_tree(empty_bst):
     """test find node with two nodes in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val)
     empty_bst.bin_tree.insert(empty_bst.input_val * 2)
@@ -129,7 +129,7 @@ def test_find_node_with_two_node_in_tree(empty_bst):
     assert result.val == empty_bst.input_val * 2
 
 
-def test_find_node_with_three_node_in_tree(empty_bst):
+def test_bst_find_node_with_three_node_in_tree(empty_bst):
     """test find node with three nodes in the tree"""
     empty_bst.bin_tree.insert(empty_bst.input_val * 10)
     empty_bst.bin_tree.insert(empty_bst.input_val)
@@ -138,7 +138,7 @@ def test_find_node_with_three_node_in_tree(empty_bst):
     assert result.val == empty_bst.input_val
 
 
-def test_left_setter_child():
+def test_bst_left_setter_child():
     """test that left child setter works"""
     from bst import Node
     node1 = Node(9)
@@ -147,7 +147,7 @@ def test_left_setter_child():
     assert node1.left.val == node2.val
 
 
-def test_left_setter_parent():
+def test_bst_left_setter_parent():
     """test that left child setter sets parent"""
     from bst import Node
     node1 = Node(9)
@@ -156,7 +156,7 @@ def test_left_setter_parent():
     assert node2.parent.val == node1.val
 
 
-def test_right_setter_child():
+def test_bst_right_setter_child():
     """test rigth child setter works"""
     from bst import Node
     node1 = Node(7)
@@ -165,7 +165,7 @@ def test_right_setter_child():
     assert node1.right.val == node2.val
 
 
-def test_right_setter_parent():
+def test_bst_right_setter_parent():
     """test that right child setter sets parent"""
     from bst import Node
     node1 = Node(7)
@@ -174,7 +174,7 @@ def test_right_setter_parent():
     assert node2.parent.val == node1.val
 
 
-def test_del_left_child():
+def test_bst_del_left_child():
     """test deleter on left child"""
     from bst import Node
     node1 = Node(9)
@@ -184,7 +184,7 @@ def test_del_left_child():
     assert node1.left is None
 
 
-def test_del_left_child_error():
+def test_bst_del_left_child_error():
     """test deleter on left child is None when it should be"""
     from bst import Node
     node1 = Node(9)
@@ -192,7 +192,7 @@ def test_del_left_child_error():
     assert node1.left is None
 
 
-def test_del_right_child():
+def test_bst_del_right_child():
     """test deleter on right child"""
     from bst import Node
     node1 = Node(7)
@@ -202,7 +202,7 @@ def test_del_right_child():
     assert node1.right is None
 
 
-def test_del_right_child_error():
+def test_bst_del_right_child_error():
     """test deleted on right child is None when it should be"""
     from bst import Node
     node1 = Node(9)
@@ -210,7 +210,7 @@ def test_del_right_child_error():
     assert node1.right is None
 
 
-def test_parent_setter_child_parent():
+def test_bst_parent_setter_child_parent():
     """test parent setter works properly"""
     from bst import Node
     node1 = Node(1)
@@ -219,7 +219,7 @@ def test_parent_setter_child_parent():
     assert node1.val == node2.parent.val
 
 
-def test_parent_setter_parent_child_right():
+def test_bst_parent_setter_parent_child_right():
     """test that parent setter sets child right properly"""
     from bst import Node
     node1 = Node(1)
@@ -228,7 +228,7 @@ def test_parent_setter_parent_child_right():
     assert node1.right.val == node2.val
 
 
-def test_parent_setter_parent_child_left():
+def test_bst_parent_setter_parent_child_left():
     """test that parent setter sets child left properly"""
     from bst import Node
     node1 = Node(2)
@@ -237,19 +237,19 @@ def test_parent_setter_parent_child_left():
     assert node1.left.val == node2.val
 
 
-def test_in_order_traversal(full_bst):
+def test_bst_in_order_traversal(full_bst):
     """test in order traversal output"""
     results = full_bst.bin_tree.in_order()
     assert list(results) == full_bst.sorted_list
 
 
-def test_in_order_traversal_empty_tree(empty_bst):
+def test_bst_in_order_traversal_empty_tree(empty_bst):
     """test in order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.in_order()
 
 
-def test_pre_order_traversal(empty_bst):
+def test_bst_pre_order_traversal(empty_bst):
     """test pre order traversal output"""
     results = [10, 5, 3, 7, 15, 13, 17]
     tree = empty_bst.bin_tree
@@ -263,13 +263,13 @@ def test_pre_order_traversal(empty_bst):
     assert list(tree.pre_order()) == results
 
 
-def test_pre_order_traversal_empty_tree(empty_bst):
+def test_bst_pre_order_traversal_empty_tree(empty_bst):
     """test pre order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.pre_order()
 
 
-def test_post_order_traversal(empty_bst):
+def test_bst_post_order_traversal(empty_bst):
     """test post order traversal output"""
     results = [3, 7, 5, 13, 17, 15, 10]
     tree = empty_bst.bin_tree
@@ -283,27 +283,27 @@ def test_post_order_traversal(empty_bst):
     assert list(tree.post_order()) == results
 
 
-def test_post_order_traversal_empty_tree(empty_bst):
+def test_bst_post_order_traversal_empty_tree(empty_bst):
     """test post order traversal on empty tree"""
     with pytest.raises(IndexError):
         empty_bst.bin_tree.post_order()
 
 
-def test_contains_true(full_bst):
+def test_bst_contains_true(full_bst):
     """test that tree contains returns true when it should"""
     tree = full_bst.bin_tree
     result = tree.contains(full_bst.sorted_list[1])
     assert result
 
 
-def test_contains_false(empty_bst):
+def test_bst_contains_false(empty_bst):
     """test contains is false when it should be"""
     tree = empty_bst.bin_tree
     result = tree.contains(1000)
     assert not result
 
 
-def test_depth(empty_bst):
+def test_bst_depth(empty_bst):
     """test the depth function returns correct value"""
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -317,13 +317,13 @@ def test_depth(empty_bst):
     assert result == 3
 
 
-def test_empty_tree_depth(empty_bst):
+def test_bst_empty_tree_depth(empty_bst):
     """test empty tree depth"""
     result = empty_bst.bin_tree.depth()
     assert result == 0
 
 
-def test_balance_balanced(empty_bst):
+def test_bst_balance_balanced(empty_bst):
     """test balance on balanced tree"""
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -337,7 +337,7 @@ def test_balance_balanced(empty_bst):
     assert result == 0
 
 
-def test_balance_negative(empty_bst):
+def test_bst_balance_negative(empty_bst):
     """test balance negative"""
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -349,7 +349,7 @@ def test_balance_negative(empty_bst):
     assert result == -1
 
 
-def test_balance_positive(empty_bst):
+def test_bst_balance_positive(empty_bst):
     """test balance positive"""
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -360,13 +360,13 @@ def test_balance_positive(empty_bst):
     assert result == 1
 
 
-def test_balance_empty():
+def test_bst_balance_empty():
     from bst import BinarySearchTree
     tree = BinarySearchTree()
     assert tree.balance() == 0
 
 
-def test_breadth_first(empty_bst):
+def test_bst_breadth_first(empty_bst):
     """test breadth-first traversal output"""
     tree = empty_bst.bin_tree
     tree.insert(10)
@@ -380,8 +380,92 @@ def test_breadth_first(empty_bst):
     assert list(tree.breadth_first()) == result
 
 
-def test_breadth_first_empty_tree(empty_bst):
+def test_bst_breadth_first_empty_tree(empty_bst):
     """test breadth-first on an empty tree"""
     tree = empty_bst.bin_tree
     with pytest.raises(IndexError):
         next(tree.breadth_first())
+
+
+def test_bst_delete_from_empty():
+    """test the delete method against an empty bst"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    result = tree.delete(7)
+    assert result is None
+
+
+def test_bst_delete_one():
+    """test that delete removes the only node in the tree if only one"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    tree.insert(7)
+    tree.delete(7)
+    assert tree.size() == 0
+
+
+def test_bst_delete_from_five():
+    """test delete with five nodes"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    tree.insert(7)
+    tree.insert(8)
+    tree.insert(9)
+    tree.insert(20)
+    tree.insert(13)
+    tree.delete(13)
+    assert tree.find_node(13) is False
+    assert tree.size() == 4
+
+
+def test_bst_delete_from_range():
+    """test specific node is removed when range is inserted"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    rng = range(0, 50)
+    for num in rng:
+        tree.insert(num)
+    tree.delete(20)
+    assert tree.find_node(20) is False
+    assert tree.size() == 49
+
+
+def _bst_tree_checker(node):
+    """helper method to check tree for correctness"""
+    if node is None:
+        return True
+    if node.left and node.left.val > node.val:
+        return False
+    if node.right and node.right.val < node.val:
+        return False
+    return all([_bst_tree_checker(node.left), _bst_tree_checker(node.right)])
+
+
+def test_bst_big_tree_correct():
+    """this test randomly generates a large tree of random values
+    and checks it for correctness"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    rndm = [random.sample(range(1000),
+            random.randrange(2, 100)) for n in range(10)]
+    for lst in rndm:
+        for val in lst:
+            tree.insert(val)
+    assert _bst_tree_checker(tree.root)
+
+
+def test_bst_big_tree_deletion():
+    """this test randomly generates a large tree and deletes a value out of
+    it, then checks the tree for correctness."""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    rndm = [random.sample(range(1000),
+            random.randrange(2, 100)) for n in range(10)]
+    tree.insert(27)
+    tree.insert(453)
+    for lst in rndm:
+        for val in lst:
+            tree.insert(val)
+    tree.delete(27)
+    tree.delete(453)
+    assert _bst_tree_checker(tree.root)

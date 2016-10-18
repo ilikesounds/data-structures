@@ -329,17 +329,29 @@ class BinarySearchTree(object):
                 yield current.val
 
     def delete(self, val):
-        """Removes a node from the Tree, returns None."""
+        """Removes a node with val from the Tree, returns None."""
         delete_me = self.find_node(val)
-        if delete_me is False:
-            return "That node is not in the BST."
-        left_childs = self.in_order(delete_me.left)
-        right_childs = self.in_order(delete_me.right)
+        if bool(delete_me) is False:
+            return
+        try:
+            left_childs = self.in_order(delete_me.left)
+        except AttributeError:
+            left_childs = []
+        try:
+            right_childs = self.in_order(delete_me.right)
+        except AttributeError:
+            right_childs = []
         left_list = []
         for child in left_childs:
             left_list.append(child)
-        left_choice = left_list[-1]
-        right_choice = right_childs.__next__()
+        try:
+            left_choice = left_list[-1]
+        except IndexError:
+            left_choice = None
+        try:
+            right_choice = next(right_childs)
+        except AttributeError:
+            right_choice = None
         a = right_choice - val
         b = val - left_choice
         if a > b:
@@ -368,17 +380,18 @@ class BinarySearchTree(object):
     def _find_node(self, val, current_node):
         """Helper method to find_node, recursively called and returns the node
         or False if it isn't in the BST."""
-        try:
-            if val == current_node.val:
-                return current_node
-            elif current_node.right and val > current_node.val:
-                return self._find_node(val, current_node.right)
-            elif current_node.left and val < current_node.val:
-                return self._find_node(val, current_node.left)
-            else:
-                return False
-        except TypeError:
-            raise(TypeError('Node values must be the same type'))
+        if self.size() > 0:
+            try:
+                if val == current_node.val:
+                    return current_node
+                elif current_node.right and val > current_node.val:
+                    return self._find_node(val, current_node.right)
+                elif current_node.left and val < current_node.val:
+                    return self._find_node(val, current_node.left)
+                else:
+                    return False
+            except TypeError:
+                raise(TypeError('Node values must be the same type'))
 
     def _left_rotation(self, pivot_parent):
         """Performs a left rotation on a given section of our BST."""
