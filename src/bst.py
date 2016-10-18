@@ -200,7 +200,6 @@ class BinarySearchTree(object):
         new_node = self.find_node(val)
         self._check_balance_and_call(new_node)
         self._update_balance(self.root)
-        self._update_balance(self.root)
 
     def contains(self, val):
         """Will return True if val is in the BST, or False if it's not."""
@@ -256,7 +255,7 @@ class BinarySearchTree(object):
 
     def balance(self, starting_point=None):
         """Will return an integer that's positive or negative that represents
-        the difference between depth on both sides from the root."""
+        the difference between depth on both sides from the starting point."""
         if starting_point is None:
             starting_point = self.root
         left_depth = starting_point.left.depth if starting_point.left else 0
@@ -376,13 +375,15 @@ class BinarySearchTree(object):
 
     def _left_rotation(self, pivot_parent):
         """Performs a left rotation on a given section of our BST."""
+        # import pdb; pdb.set_trace()
         a = pivot_parent
         b = pivot_parent.right
-        try:
-            z = pivot_parent.parent
-        except AttributeError:
+        print("left rotation", a.val)
+        if pivot_parent.parent is None:
             z = None
             self.root = b
+        else:
+            z = pivot_parent.parent
         try:
             w = pivot_parent.right.left
         except AttributeError:
@@ -395,11 +396,12 @@ class BinarySearchTree(object):
         """Performs a right rotation on a given section of our BST."""
         a = pivot_parent
         b = pivot_parent.left
-        try:
-            z = pivot_parent.parent
-        except AttributeError:
+        print("right rotation", a.val)
+        if pivot_parent.parent is None:
             z = None
             self.root = b
+        else:
+            z = pivot_parent.parent
         try:
             w = pivot_parent.left.right
         except AttributeError:
@@ -411,19 +413,20 @@ class BinarySearchTree(object):
     def _check_balance_and_call(self, starting_point, previous=None):
         """Checks the balance of parents of a given node up to the root, calls
         _determine_rotations_and_call if rotations needed."""
-        # import pdb; pdb.set_trace()
         if starting_point is None:
             return
         bal = self.balance(starting_point)
         if previous is None:
             if bal > 0:
-                previous = starting_point.right
-            elif bal < 0:
                 previous = starting_point.left
+            elif bal < 0:
+                previous = starting_point.right
         if bal > 1:
+            print("balance at {} is {}".format(starting_point.val, bal))
             self._determine_rotations_and_call(starting_point, previous)
             return
         if bal < -1:
+            print("balance at {} is {}".format(starting_point.val, bal))
             self._determine_rotations_and_call(starting_point, previous)
             return
         if starting_point.parent is None:
@@ -432,8 +435,7 @@ class BinarySearchTree(object):
         return
 
     def _determine_rotations_and_call(self, starting_point, previous):
-        """Determine which rotations are needed and call them, then call
-        _update_balance."""
+        """Determine which rotations are needed and make them."""
         start_bal = self.balance(starting_point)
         if previous is not None:
             prev_bal = self.balance(previous)
@@ -441,11 +443,11 @@ class BinarySearchTree(object):
             prev_bal = 0
         if start_bal < -1:
             if prev_bal > 0:
-                self._right_rotation(starting_point)
+                self._right_rotation(starting_point.right)
             self._left_rotation(starting_point)
-        else:
+        elif start_bal > 1:
             if prev_bal < 0:
-                self._left_rotation(starting_point)
+                self._left_rotation(starting_point.left)
             self._right_rotation(starting_point)
 
     def _update_balance(self, starting_point):
