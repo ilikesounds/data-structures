@@ -422,6 +422,32 @@ def test_bst_delete_one():
     assert tree.size() == 0
 
 
+def test_bst_delete_two_right():
+    """test that delete removes one node if there's two and the seond one is
+    on th right of the root"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    tree.insert(4)
+    tree.insert(5)
+    tree.delete(5)
+    # import pdb; pdb.set_trace()
+    assert tree.size() == 1
+    assert tree.contains(5) is False
+
+
+def test_bst_delete_two_left():
+    """test that delete removes one node if there's two and the second one is
+    on the left of the root"""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    tree.insert(5)
+    tree.insert(4)
+    tree.delete(4)
+    # import pdb; pdb.set_trace()
+    assert tree.size() == 1
+    assert tree.contains(4) is False
+
+
 def test_bst_delete_from_five():
     """test delete with five nodes"""
     from bst import BinarySearchTree

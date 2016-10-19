@@ -368,6 +368,7 @@ class BinarySearchTree(object):
             else:
                 if delete_me.parent.right is not None:
                     delete_me.parent.right = None
+                    delete_me.parent.left = None
                 delete_me.parent = None
         else:
             if right_choice is not None:
@@ -381,6 +382,7 @@ class BinarySearchTree(object):
                 delete_me.val = right_choice.val
             else:
                 if delete_me.parent is not None:
+                    delete_me.parent.right = None
                     delete_me.parent.left = None
                 delete_me.parent = None
         self._check_balance_and_call(delete_me)
