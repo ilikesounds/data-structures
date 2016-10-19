@@ -7,11 +7,9 @@ import pytest
 import random
 import string
 
-
 INT_CASES = [random.sample(range(1000),
              random.randrange(2, 100)) for n in range(10)
              ]
-
 
 STR_CASES = [random.sample(string.printable,
              random.randrange(2, 100)) for n in range(10)
@@ -23,6 +21,26 @@ MyBSTFix = namedtuple(
     'BSTFixture',
     ('bin_tree', 'input_val', 'error_gen', 'length', 'sorted_list')
 )
+RANDOM_DELETE_SAMPLE = [random.sample(range(-1000, 5000),
+                        50) for n in range(20)]
+
+
+def _random_generator():
+    """from a random constant, make a generator for random test values"""
+    for sequence in RANDOM_DELETE_SAMPLE:
+        for item in sequence:
+            yield (item, sequence)
+
+
+def _bst_tree_checker(node):
+    """helper method to check tree for correctness"""
+    if node is None:
+        return True
+    if node.left and node.left.val > node.val:
+        return False
+    if node.right and node.right.val < node.val:
+        return False
+    return all([_bst_tree_checker(node.left), _bst_tree_checker(node.right)])
 
 
 @pytest.fixture(scope='function', params=TEST_CASES)
@@ -239,14 +257,14 @@ def test_bst_parent_setter_parent_child_left():
 
 def test_bst_in_order_traversal(full_bst):
     """test in order traversal output"""
-    results = full_bst.bin_tree.in_order()
+    results = full_bst.bin_tree.in_order(full_bst.bin_tree.root)
     assert list(results) == full_bst.sorted_list
 
 
 def test_bst_in_order_traversal_empty_tree(empty_bst):
     """test in order traversal on empty tree"""
     with pytest.raises(IndexError):
-        empty_bst.bin_tree.in_order()
+        empty_bst.bin_tree.in_order(empty_bst.bin_tree.root)
 
 
 def test_bst_pre_order_traversal(empty_bst):
@@ -430,17 +448,6 @@ def test_bst_delete_from_range():
     assert tree.size() == 49
 
 
-def _bst_tree_checker(node):
-    """helper method to check tree for correctness"""
-    if node is None:
-        return True
-    if node.left and node.left.val > node.val:
-        return False
-    if node.right and node.right.val < node.val:
-        return False
-    return all([_bst_tree_checker(node.left), _bst_tree_checker(node.right)])
-
-
 def test_bst_big_tree_correct():
     """this test randomly generates a large tree of random values
     and checks it for correctness"""
@@ -468,4 +475,16 @@ def test_bst_big_tree_deletion():
     tree.insert(453)
     tree.delete(27)
     tree.delete(453)
+    assert _bst_tree_checker(tree.root)
+
+
+@pytest.mark.parametrize('to_delete, sequence', _random_generator())
+def test_bst_big_tree_deletion_two(to_delete, sequence):
+    """this test randomly generates a large tree and deletes a value out of
+    it, then checks the tree for correctness."""
+    from bst import BinarySearchTree
+    tree = BinarySearchTree()
+    for item in sequence:
+        tree.insert(item)
+    tree.delete(to_delete)
     assert _bst_tree_checker(tree.root)

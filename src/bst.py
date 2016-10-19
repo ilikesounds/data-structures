@@ -27,12 +27,12 @@ class Node(object):
         return self._left
 
     @left.setter
-    def left(self, other):
+    def left(self, node):
         """value setter for _left, allows us to say 'set node.left = X'
         elsewhere in our code and not have it throw wrenches at us"""
-        self._left = other
-        if other is not None:
-            other._parent = self
+        self._left = node
+        if node is not None:
+            node._parent = self
 
     @left.deleter
     def left(self):
@@ -50,11 +50,11 @@ class Node(object):
         return self._right
 
     @right.setter
-    def right(self, other):
+    def right(self, node):
         """sets value of _right and right's parent"""
-        self._right = other
-        if other is not None:
-            other._parent = self
+        self._right = node
+        if node is not None:
+            node._parent = self
 
     @right.deleter
     def right(self):
@@ -72,15 +72,15 @@ class Node(object):
         return self._parent
 
     @parent.setter
-    def parent(self, other):
+    def parent(self, node):
         """sets the parent node and the parent's left or right,
         as appropriate"""
-        self._parent = other
+        self._parent = node
         try:
-            if other.val > self.val:
-                other._left = self
+            if node.val > self.val:
+                node._left = self
             else:
-                other._right = self
+                node._right = self
         except AttributeError:
             pass
 
@@ -269,15 +269,13 @@ class BinarySearchTree(object):
         right_depth = starting_point.right.depth if starting_point.right else 0
         return left_depth - right_depth
 
-    def in_order(self, starting_point=None):
+    def in_order(self, starting_point):
         """
         This function will return a generator that will return the values
         of the tree using in-order traversal, one value at a time.
         """
         if self.length == 0:
             raise IndexError("You can't in-order traverse an empty Tree.")
-        if starting_point is None:
-            starting_point = self.root
         return starting_point._in_order()
 
     def pre_order(self, starting_point=None):
@@ -347,28 +345,44 @@ class BinarySearchTree(object):
             left_choice = None
         try:
             right_choice = right_childs[0]
-        except AttributeError:
+        except IndexError:
             right_choice = None
-        a = abs(right_choice - val)
-        b = abs(val - left_choice)
+        try:
+            a = abs(right_choice - val)
+        except TypeError:
+            a = 0
+        try:
+            b = abs(val - left_choice)
+        except TypeError:
+            b = 0
         if a > b:
-            left_choice = self.find_node(left_choice)
-            if self.root == delete_me:
-                self.root = left_choice
-            if left_choice.left is not None:
-                left_choice.left.parent = left_choice.parent
-            else:
+            if left_choice is not None:
+                left_choice = self.find_node(left_choice)
+                left_choice.parent.right = None
+                if self.root == delete_me:
+                    self.root = left_choice
+                if left_choice.left is not None:
+                    left_choice.left.parent = left_choice.parent
                 left_choice.parent = None
-            delete_me.val = left_choice.val
-        else:
-            right_choice = self.find_node(right_choice)
-            if self.root == delete_me:
-                self.root = right_choice
-            if right_choice.right is not None:
-                right_choice.right.parent = right_choice.parent
+                delete_me.val = left_choice.val
             else:
+                if delete_me.parent.right is not None:
+                    delete_me.parent.right = None
+                delete_me.parent = None
+        else:
+            if right_choice is not None:
+                right_choice = self.find_node(right_choice)
+                right_choice.parent.left = None
+                if self.root == delete_me:
+                    self.root = right_choice
+                if right_choice.right is not None:
+                    right_choice.right.parent = right_choice.parent
                 right_choice.parent = None
-            delete_me.val = right_choice.val
+                delete_me.val = right_choice.val
+            else:
+                if delete_me.parent is not None:
+                    delete_me.parent.left = None
+                delete_me.parent = None
         self._check_balance_and_call(delete_me)
         self._update_balance(self.root)
         self.length -= 1
@@ -396,7 +410,6 @@ class BinarySearchTree(object):
 
     def _left_rotation(self, pivot_parent):
         """Performs a left rotation on a given section of our BST."""
-        # import pdb; pdb.set_trace()
         a = pivot_parent
         b = pivot_parent.right
         if pivot_parent.parent is None:
