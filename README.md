@@ -9,9 +9,9 @@
 [Radix Tree Implementation](http://www.geekviewpoint.com/python/sorting/radixsort)
 
 ## Binary Search Tree
--
-
-- Group whiteboarding session between Derek, Mike, James, Steve and Nick was helpful in determining when BST rotations should take place.s
+- Our Binary Search Tree is a binary tree that implements rotations, self-balancing, traversals and node deletion.
+- Binary Search Trees are ideal for situations where data access speed is paramount and additional processing at the time of insert and deletion will not impact system performance.
+- Group whiteboarding session between Derek, Mike, James, Steve and Nick was helpful in determining when BST rotations should take place.
 
 ### Cited Sources:
 [Binary Tree Implementation](http://interactivepython.org/runestone/static/pythonds/Trees/SearchTreeImplementation.html)
