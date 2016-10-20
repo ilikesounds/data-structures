@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """The following code tests our trie tree implementation."""
-from __future__ import unicode_literals
 import pytest
 
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """The following code implements a trie tree in python."""
-from __future__ import unicode_literals
 
 
 class Trie(object):

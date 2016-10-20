@@ -8,6 +8,15 @@
 ### Cited Sources:
 [Radix Tree Implementation](http://www.geekviewpoint.com/python/sorting/radixsort)
 
+## Trie Tree
+- A Trie Tree is an ordered data structure that is used to store a similar array of things.  In the case of our trie you can fill it with strings.
+- The Trie's main advantage is that it's fast to insert and look up values, in the worst case looking things up in O*(lenth of input) time.
+
+### Cited Sources:
+[Wikipedia](https://en.wikipedia.org/wiki/Trie)
+[Justin's Implementation](https://github.com/welliam/data-structures)
+[Tries on Youtube](https://www.youtube.com/watch?v=RIUY7ieyH40)
+
 ## Binary Search Tree
 - Our Binary Search Tree is a binary tree that implements rotations, self-balancing, traversals and node deletion.
 - Binary Search Trees are ideal for situations where data access speed is paramount and additional processing at the time of insert and deletion will not impact system performance.
@@ -28,7 +37,7 @@
 - this is an implementation of a doubly linked list in Python  
 
 ### Cited Sources:  
-  - http://stackoverflow.com/questions/23337471/how-to-properly-assert-that-exception-raises-in-pytest  
+[Exceptions in Pytest](http://stackoverflow.com/questions/23337471/how-to-properly-assert-that-exception-raises-in-pytest)
 
 ## Queue  
 - this is an implementation of a queue in Python  
