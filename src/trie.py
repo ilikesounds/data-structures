@@ -35,7 +35,7 @@ class Trie(object):
 
     def traversal(self, start):
         """Performs a depth-first traversal of our trie beginning at the
-        node we specify as start, otherwise we begin at the root."""
+        string we specify as start"""
         if not isinstance(start, str):
             raise TypeError("Input must be a string.")
         if '$' in start:
@@ -43,5 +43,6 @@ class Trie(object):
         tokens = self.tokens
         for char in start:
             tokens = tokens[char]
-
-
+        # step through the trie from here
+        # yeild each word as you come to it
+        # the type of traversal isn't important, just make one
