@@ -23,10 +23,11 @@ def bp_hash(key, size):
 
 
 def simple_hash(key, size):
-    key = bytearray(key.encode())
+    key = bytearray(key.encode('utf-8'))
     hash_value = 0
     for i in key:
-        hash_value += i % size
+        hash_value += i
+    hash_value = hash_value % size
     return hash_value
 
 
@@ -59,7 +60,7 @@ class HashTable(object):
         try:
             hash_key = self._hash(key, self.size)
         except AttributeError:
-            raise KeyError('Value must be a string')
+            raise TypeError('Value must be a string')
         if val not in self._buckets[hash_key]:
             self._buckets[hash_key].append((key, val))
 
@@ -71,7 +72,7 @@ class HashTable(object):
         for item in self._buckets[hash_key]:
             if item[0] == key:
                 return item[1]
-        return KeyError('This key was not found in the hash table')
+        raise KeyError('This key was not found in the hash table')
 
     def _hash(self, key, size):
         """

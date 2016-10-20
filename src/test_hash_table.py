@@ -41,22 +41,24 @@ def test_hash_table_hash_method():
 def test_hash_table_set_error():
     """Test to ensure KeyError is raised from by a non-string input"""
     ht = HashTable(1024)
-    with pytest.raises(KeyError):
+    with pytest.raises(TypeError):
         ht.set(1, 2)
 
 
 # @pytest.mark.parametrize('hash_func', HASH_FUNCTIONS)
-# def test_hash_word_list():
-#     """
-#     Full test of hash table with user dictionary
-#     """
-#     mil = 1000000
-#     ht = HashTable(mil)
-#     dictionary = '/usr/share/dict/words'
-#     f = open(dictionary, 'r')
-#
-#     for item in f:
-#         word = item.rstrip('\n')
-#         ht.set(word, word)
-#     f.close()
-#     assert ht.get(word) == word
+def test_hash_word_list():
+    """
+    Full test of hash table with user dictionary
+    """
+    mil = 260000
+    ht = HashTable(mil)
+    dictionary = '/usr/share/dict/words'
+    f = open(dictionary, 'r')
+
+    for item in f:
+        if isinstance(item, bytes):
+            item = item.decode('utf-8')
+        word = item.rstrip('\n')
+        ht.set(word, word)
+    f.close()
+    assert ht.get(word) == word
