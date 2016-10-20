@@ -7,23 +7,17 @@ import timeit
 import random
 
 
-class MergeSort(object):
+def merge_sort(merge_list):
+    """This function will call the recursive merge sort method and returb a
+    sorted list"""
 
-    def merge_sort(self, merge_list):
-        """This function will call the recursive merge sort method and returb a
-        sorted list"""
-        if len(merge_list) > 1:
-            mid_point = len(merge_list) // 2
-            left = merge_list[:mid_point]
-            right = merge_list[mid_point:]
+    if len(merge_list) > 1:
+        mid_point = len(merge_list) // 2
+        left = merge_list[:mid_point]
+        right = merge_list[mid_point:]
 
-        self._merge_sort_recursive(merge_list, left, right)
-        self._merge_sort_recursive(merge_list, left, right)
-
-    def _merge_sort_recursive(self, merge_list, left, right):
-
-        """This is the recurssive method that will operate on the list to merge
-        sort the supplied list"""
+        merge_sort(left)
+        merge_sort(right)
 
         left_i = 0
         right_i = 0
@@ -54,8 +48,6 @@ rand_list = random.sample(range(1000), random.randrange(2, 100))
 
 if __name__ == '__main__':
 
-    from merge_sort import MergeSort
-
-    print(timeit.timeit("MergeSort().merge_sort(presorted_list)"))
-    print(timeit.timeit("MergeSort().merge_sort(presorted_rev_list)"))
-    print(timeit.timeit("MergeSort().merge_sort(rand_list)"))
+    print(timeit.timeit("merge_sort(presorted_list)"))
+    print(timeit.timeit("merge_sort(presorted_rev_list)"))
+    print(timeit.timeit("merge_sort(rand_list)"))
