@@ -269,11 +269,13 @@ class BinarySearchTree(object):
         right_depth = starting_point.right.depth if starting_point.right else 0
         return left_depth - right_depth
 
-    def in_order(self, starting_point):
+    def in_order(self, starting_point=None):
         """
         This function will return a generator that will return the values
         of the tree using in-order traversal, one value at a time.
         """
+        if starting_point is None:
+            starting_point = self.root
         if self.length == 0:
             raise IndexError("You can't in-order traverse an empty Tree.")
         return starting_point._in_order()
@@ -331,13 +333,19 @@ class BinarySearchTree(object):
         delete_me = self.find_node(val)
         if not delete_me:
             return
-        try:
-            left_childs = list(self.in_order(delete_me.left))
-        except AttributeError:
+        if delete_me.left is not None:
+            try:
+                left_childs = list(self.in_order(delete_me.left))
+            except AttributeError:
+                left_childs = []
+        else:
             left_childs = []
-        try:
-            right_childs = list(self.in_order(delete_me.right))
-        except AttributeError:
+        if delete_me.right is not None:
+            try:
+                right_childs = list(self.in_order(delete_me.right))
+            except AttributeError:
+                right_childs = []
+        else:
             right_childs = []
         try:
             left_choice = left_childs[-1]
