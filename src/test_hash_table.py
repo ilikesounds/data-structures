@@ -11,7 +11,7 @@ HTFix = namedtuple(
 )
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='function',)
 def ht(request):
     '''fixture for hash table tests'''
     from hash_table import HashTable
@@ -23,6 +23,7 @@ def ht(request):
         if isinstance(item, bytes):
             item = item.decode('utf-8')
         word = item.rstrip('\n')
+        table.set(word, word)
     f.close()
 
     return HTFix(table, word)
@@ -69,6 +70,7 @@ def test_hash_table_hash_method():
 def test_hash_table_set_error():
     """Test to ensure KeyError is raised from by a non-string input"""
     ht = HashTable(1024)
+    import pdb; pdb.set_trace()
     with pytest.raises(TypeError):
         ht.set(1, 2)
 
