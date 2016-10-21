@@ -42,12 +42,33 @@ def merge_sort(merge_list):
             right_i += 1
             ml_i += 1
 
-presorted_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-pre_sorted_rev_list = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-rand_list = random.sample(range(1000), random.randrange(2, 100))
-
 if __name__ == '__main__':
-
-    print(timeit.timeit("merge_sort(presorted_list)"))
-    print(timeit.timeit("merge_sort(presorted_rev_list)"))
-    print(timeit.timeit("merge_sort(rand_list)"))
+    print("")
+    print("Merge Sort")
+    print("")
+    print("The following code demonstrates the performance of Merge Sort")
+    print("in a variety of use conditions executed 500 times.")
+    print("")
+    print("Input: 20 random ints under 100")
+    result = timeit.timeit(
+        'merge_sort(random.sample(range(100), 20))',
+        setup="""from __main__ import merge_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
+    print("")
+    print("Input: 100 random ints under 1000")
+    result = timeit.timeit(
+        'merge_sort(random.sample(range(1000), 100))',
+        setup="""from __main__ import merge_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
+    print("")
+    print("Input: 1000 random ints under 10000")
+    result = timeit.timeit(
+        'merge_sort(random.sample(range(10000), 1000))',
+        setup="""from __main__ import merge_sort, random""",
+        number=500)
+    print("Total elapsed time: ", result)
+    print ("Average time per cycle: ", result / 500)
