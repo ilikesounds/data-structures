@@ -23,7 +23,9 @@ def bp_hash(key, size):
 
 
 def simple_hash(key, size):
-    key = bytearray(key.encode('utf-8'))
+    if isinstance(key, bytes):
+        key = key.decode()
+    key = bytearray(u'key'.encode('utf-8'))
     hash_value = 0
     for i in key:
         hash_value += i
