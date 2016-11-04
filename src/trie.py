@@ -99,3 +99,8 @@ class Trie(object):
         """Loads a list of values into the Trie."""
         for word in words:
             self.insert(word)
+
+    def traversal(self, start=None):
+        """Return words in a trie if provied a starting string."""
+        for item in self.first_node._traversal(start=start):
+            yield item
