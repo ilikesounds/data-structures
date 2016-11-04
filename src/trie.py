@@ -8,6 +8,7 @@ https://github.com/crashtack/data-structures/tree/trie
 
 END = '$'
 
+
 class Node(object):
     """Implements nodes for our Trie tree."""
 
@@ -15,7 +16,6 @@ class Node(object):
         """Creates an instance of our trie node class."""
         self.value = value
         self.next = []
-
 
     def __eq__(self, other):
         """Method to check and compare if a letter is next"""
