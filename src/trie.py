@@ -56,14 +56,14 @@ class Node(object):
         """
         if start:
             next_letter = start[0]
-            if next_letter in self.next_let:
+            if next_letter in self.next:
                 start = start[1:]
                 try:
                     word += self.value
                 except TypeError:
                     pass
-                index = self.next_let.index(next_letter)
-                for item in self.next_let[index]._traversal(word, start):
+                index = self.next.index(next_letter)
+                for item in self.next[index]._traversal(word, start):
                     yield item
             else:
                 StopIteration
@@ -75,7 +75,7 @@ class Node(object):
                     word += self.value
                 except TypeError:
                     pass
-                for node in self.next_let:
+                for node in self.next:
                     for item in node._traversal(word):
                         yield item
 
