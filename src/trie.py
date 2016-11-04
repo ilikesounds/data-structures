@@ -94,3 +94,8 @@ class Trie(object):
     def contains(self, value):
         """Returns true if value is in trie, false if not."""
         return self.root._contains(value)
+
+    def load(self, words):
+        """Loads a list of values into the Trie."""
+        for word in words:
+            self.insert(word)
