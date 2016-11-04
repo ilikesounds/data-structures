@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """The following code tests our trie tree implementation."""
 
+import pytest
 
 def test_trie_init():
     """
@@ -161,3 +162,171 @@ def test_contains_doesnt_contain_word():
     trie = Trie()
     trie.insert('ate')
     assert not trie.contains('at')
+
+
+def test_trie_load():
+    """
+    Test to confirm that Trie load function correctly creates a Trie structure'
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = [
+        'barge',
+        'barium',
+        'bark',
+        'barley',
+        'barmaid',
+        'basal',
+        'base',
+        'bates',
+        'bath',
+        'baton'
+        ]
+    trie.load(new_list)
+    for item in new_list:
+        assert trie.contains(item)
+
+
+def test_trie_load_not_in_list():
+    """
+    Test to confirm that Trie load function not create extra roots upon insert
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = [
+        'barge',
+        'barium',
+        'bark',
+        'barley',
+        'barmaid',
+        'basal',
+        'base',
+        'bates',
+        'bath',
+        'baton'
+    ]
+    trie.load(new_list)
+    assert not trie.contains('bar')
+
+
+def test_traversal_returns_token_one_letter_word():
+    """
+    Test Trie traversal method to ensure that one character word is returned
+    correctly.
+    """
+    from trie import Trie
+    trie = Trie()
+    trie.insert('I')
+    char_list = []
+    for char in trie.traversal():
+        char_list.append(char)
+    assert 'I' in char_list
+
+
+def test_traversal_returns_token_two_letter_word():
+    """
+    Test Trie traversal method to ensure that two character word is returned
+    correctly.
+    """
+    from trie import Trie
+    trie = Trie()
+    trie.insert('It')
+    char_list = []
+    for char in trie.traversal():
+        char_list.append(char)
+    assert 'It' in char_list
+
+
+def test_traversal_generator_whole_list():
+    """
+    Test to see if traversal returns only items in the start list.
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = [
+        'barge',
+        'barium',
+        'bark',
+        'barley',
+        'barmaid',
+        'basal',
+        'base',
+        'bates',
+        'bath',
+        'baton'
+    ]
+    trie.load(new_list)
+    count = 0
+    for word in trie.traversal():
+        assert word in new_list
+        count += 1
+    assert count == len(new_list)
+
+
+def test_traversal_generator_with_start():
+    """
+    Test to see if traversal returns only items in the start list.
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = ['baton']
+    trie.load(new_list)
+    count = 0
+    for item in trie.traversal(start='b'):
+        assert item in new_list
+        count += 1
+    assert count == 1
+
+
+def test_traversal_generator_with_start_partial_match():
+    """
+    Test to see if traversal returns only items in the start list.
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = ['ball', 'tall']
+    trie.load(new_list)
+    count = 0
+    for item in trie.traversal(start='t'):
+        assert item in new_list
+        count += 1
+    assert count == 1
+
+
+def test_traversal_generator_with_start_no_match():
+    """
+    Test to see if traversal returns only items in the start list.
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = ['ball', 'tall']
+    trie.load(new_list)
+    count = 0
+    for item in trie.traversal(start='q'):
+        count += 1
+    assert count == 0
+
+
+def test_traversal_generator_with_start_full_list():
+    """
+    Test to see if traversal returns only items in the start list.
+    """
+    from trie import Trie
+    trie = Trie()
+    new_list = [
+        'barge',
+        'barium',
+        'bark',
+        'barley',
+        'barmaid',
+        'basal',
+        'base',
+        'bates',
+        'bath',
+        'baton'
+    ]
+    trie.load(new_list)
+    count = 0
+    for item in trie.traversal(start='bar'):
+        count += 1
+    assert count == 5
