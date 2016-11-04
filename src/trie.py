@@ -102,5 +102,5 @@ class Trie(object):
 
     def traversal(self, start=None):
         """Return words in a trie if provied a starting string."""
-        for item in self.first_node._traversal(start=start):
+        for item in self.root._traversal(start=start):
             yield item
