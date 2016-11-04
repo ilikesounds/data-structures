@@ -49,6 +49,36 @@ class Node(object):
         else:
             return False
 
+    def _traversal(self, word='', start=''):
+        """
+        Generate a list of words strings below the current node.
+        strings will start with the start sting
+        """
+        if start:
+            next_letter = start[0]
+            if next_letter in self.next_let:
+                start = start[1:]
+                try:
+                    word += self.value
+                except TypeError:
+                    pass
+                index = self.next_let.index(next_letter)
+                for item in self.next_let[index]._traversal(word, start):
+                    yield item
+            else:
+                StopIteration
+        else:
+            if self.value == END:
+                yield word
+            else:
+                try:
+                    word += self.value
+                except TypeError:
+                    pass
+                for node in self.next_let:
+                    for item in node._traversal(word):
+                        yield item
+
 
 class Trie(object):
     """Trie tree class with supporting methods."""
