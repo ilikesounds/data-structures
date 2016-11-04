@@ -111,7 +111,7 @@ def test_word_stop_charcter():
 
 def test_contains_one_letter_word():
     """
-    Test that one character root is found by _contains and returned properly.
+    Test that one character root is found by contains and returned properly.
     """
     from trie import Trie
     trie = Trie()
@@ -121,7 +121,7 @@ def test_contains_one_letter_word():
 
 def test_contains_two_letter_word():
     """
-    Test that two character root and leaf is found by _contains and returned
+    Test that two character root and leaf is found by contains and returned
     properly.
     """
     from trie import Trie
@@ -132,7 +132,7 @@ def test_contains_two_letter_word():
 
 def test_contains_long_word():
     """
-    Test that a long string inserts into the trie and is returned by _contains
+    Test that a long string inserts into the trie and is returned by contains
     properly.
     """
     from trie import Trie

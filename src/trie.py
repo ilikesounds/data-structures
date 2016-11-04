@@ -43,7 +43,7 @@ class Node(object):
                 return True
             else:
                 return False
-        if END in self.next:
+        if letter in self.next:
             index = self.next.index(letter)
             return self.next[index]._contains(word[1:])
         else:
